@@ -34,6 +34,23 @@ async def main():
     # By default socketio uses the path /socket.io but Kano uses /apiws
     await sio.connect(KANO_BASE_URL, socketio_path=WEBSOCKET_PATH, headers=headers)
 
+    # There are two ways to authenticate the user :
+        # 1. By sending the JWT token in the connection headers (as shown above)
+        # 2. By sending a create message to the authentication service (as shown below) (all the messages sent after this one will be authenticated)
+        #    more info (https://feathersjs.com/api/client/socketio#authentication) 
+        #
+        # await sio.emit("create",
+        #     ("api/authentication",
+        #         {
+        #             "strategy": 'jwt',
+        #             "accessToken": JWT_TOKEN
+        #         },
+        #     ),
+        #     callback=print
+        # )
+
+
+
     # Example of sending a patch message to the server
     # Update the geometry of the features with properties.deviceId = 3 every 100ms  with a random geometry
     for i in range(0,1000): 
